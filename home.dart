@@ -1,44 +1,35 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 myapp() {
-  var text = Center(child :Text(
-    "WelcomeToMyApp",
-    textDirection: TextDirection.ltr,
-    textAlign: TextAlign.center,
-  ));
-  press1() {
-    print("User Tapped on the Home Button!!");
-  }
-  var url =
-      'https://github.com/samkit-jpss/FlutterBasicApp/blob/master/myimage.jpg?raw=true';
-  var myimage = Image.network(
-    url,
-  );
-  var myicon = Icon(
-    Icons.home,
-    size: 35.0,
-  );
-  var myiconbutton = IconButton(
-    icon: myicon,
-    onPressed: press1,
-    color: Colors.white,
-  );
-  var myappbar = AppBar(
-    title: text,
-    backgroundColor: Colors.brown.shade700,
-    actions: <Widget>[myiconbutton],
-    leading: Icon(Icons.menu,size: 35,),
-  );
-  var myhome = Scaffold(
-    appBar: myappbar,
-    backgroundColor: Colors.brown,
-    body: myimage,
+  var con = Container(
+    width: 300,
+    height: 300,
+    alignment: Alignment.bottomCenter,
+      child: Text(
+        "Mr.Samkit Shah",
+        style: TextStyle(
+            color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold,),
+      ),
+    
+    decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: NetworkImage('https://github.com/samkit-jpss/FlutterBasicApp/blob/master/myimage.jpeg?raw=true'),),
+     borderRadius: BorderRadius.circular(200),
+     border: Border.all(width:6 , color: Colors.brown.shade800,)
+     
+     ) ,);
+var myicon = Icon(Icons.home,size: 30,);
+var mylicon = Icon(Icons.menu , size: 30);
+  return MaterialApp(
+    home: Scaffold(
+      backgroundColor: Colors.brown.shade100,
   
-  );
-  var design = MaterialApp(
-    home: myhome,
+      body: Center(child: con),
+      appBar: AppBar(
+        leading: mylicon,
+        actions: <Widget>[myicon],
+        title: Text('My Data'),
+        backgroundColor: Colors.brown.shade900,
+      ),
+    ),
     debugShowCheckedModeBanner: false,
   );
-  return design;
 }

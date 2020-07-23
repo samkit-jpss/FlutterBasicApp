@@ -1,7 +1,8 @@
 
-import 'package:flutter/cupertino.dart';
-import 'package:project1/home.dart';
+import 'package:flutter/material.dart';
+import 'home.dart';
 
 main(){
-runApp(myapp());
+  runApp(myapp());
+
 }
