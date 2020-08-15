@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -5,12 +8,12 @@ void main() {
   runApp(MyApp());
 }
 
-String x;
-myweb(x) async{
-  var url = "http://192.168.29.26/cgi-bin/${x}.py";
-  var response = await http.get(url);
-  var body = response.body;
-  print(body);
+weather()async{
+
+  var url = "http://api.openweathermap.org/data/2.5/forecast?q=jaipur&appid=9a1f86b63c52c9957c79690387438790";
+  var respo = await http.get(url);
+  var out = jsonDecode(respo.body);
+  print(out['list'][0]["weather"][0]["description"]);
 }
 
 class MyApp extends StatelessWidget {
@@ -20,32 +23,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Input Filed'),
+          title: Text("WeatherAPI"),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Enter command below :"),
-              Card(
-                margin: EdgeInsets.all(30),
-                color: Colors.blue.shade50,
-                elevation: 10,
-                child: TextField(
-                  onChanged: (val) {
-                    x = val;
-                  },
-                ),
-              ),
-              FlatButton(
-                onPressed: () {
-                  print(myweb(x));
-                },
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Icon(Icons.play_arrow), Text("Run")]),
-              ),
-            ],
+          child: FlatButton(
+            onPressed: (){
+              weather();
+            },
+            child: Text("Click for Weather Report"),color: Colors.blue.shade200,
           ),
         ),
       ),
