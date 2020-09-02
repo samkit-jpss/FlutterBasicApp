@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -13,59 +19,34 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("SnackBar"),
+          title: Text("FireBase App"),
         ),
-        body: Layer(),
-      ),
-    );
-  }
-}
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RaisedButton(
+                onPressed: (){
+                  FirebaseFirestore.instance.collection("students").add({
+                    'name': 'jack',
+                    'mobile': 8114467618,
+                    'class': 12,
 
-class Layer extends StatefulWidget {
-  Layer({Key key}) : super(key: key);
-
-  @override
-  _LayerState createState() => _LayerState();
-}
-
-class _LayerState extends State<Layer> {
-  var p;
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width:double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.all(110),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: RaisedButton(
-                onPressed: () {
-                  p = Scaffold.of(context).hasAppBar;
-                
-                  print(p);
+                  });
                 },
-                child: Center(
-                  child: Text("Button for Scaffold.of()"),
-                ),
+                child: Text("SEND DATA"),
               ),
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: () {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("You pressed snackbar!"),
-                      duration: Duration(seconds: 3),
-                    ),
-                  );
+              RaisedButton(
+                onPressed: () async{
+                  var n = await FirebaseFirestore.instance.collection("students").get();
+                  for (var i in n.docs){
+                    print(i.data());
+                  }
                 },
-                child: Text("Snackbar"),
+                child: Text("SHOW DATA"),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
